@@ -73,7 +73,7 @@ void matrix::printPath(tuple<int, int>& cur, tuple<int, int> end)
 		(*this)(get<0>(cur), get<1>(cur)) = 'C';
 		cout << (*this);
 		(*this)(get<0>(cur), get<1>(cur)) = '=';
-		if (yStep == 0 and xStep == 0) {
+		if (yStep == 0 && xStep == 0) {
 			break;
 		}
 		stepNum++;
