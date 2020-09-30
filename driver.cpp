@@ -25,13 +25,13 @@ void main(int argc, char** argv)
 		m.initP();
 		getline(input, line);
 		start = make_tuple(stoi(string(1, line[1]))-1, stoi(string(1, line[4]))-1);
-		m.SetCur(stoi(string(1, line[1])) - 1, stoi(string(1, line[4])) - 1);
+		//m.SetCur(stoi(string(1, line[1])) - 1, stoi(string(1, line[4])) - 1);
 		//cout << "start"<< get<0>(start)<< get<1>(start) <<endl;
 		//m(stoi(string(1, line[1]))-1, stoi(string(1, line[4]))-1) = 'C';
 		getline(input, line);
 		//cout << line << endl;
 		end = make_tuple(stoi(string(1, line[1]))-1, stoi(string(1, line[4]))-1);
-		m.SetEnd(stoi(string(1, line[1])) - 1, stoi(string(1, line[4])) - 1);
+		//m.SetEnd(stoi(string(1, line[1])) - 1, stoi(string(1, line[4])) - 1);
 		//cout << "end "<<get<0>(end) << get<1>(end) << endl;
 		m(stoi(string(1, line[1]))-1, stoi(string(1, line[4]))-1) = 'E';
 		while (input.good()) {
@@ -42,7 +42,7 @@ void main(int argc, char** argv)
 			}
 			m(stoi(string(1, line[1]))-1, stoi(string(1, line[4]))-1) = 'O';
 		}
-		m.printPath();
+		m.printPath(start, end);
 		//cout << m;
 	}
 }

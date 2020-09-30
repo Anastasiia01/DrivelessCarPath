@@ -62,16 +62,14 @@ matrix::~matrix()
 	delete[] p;
 }
 
-//void matrix::printPath(tuple<int, int>& cur, tuple<int, int> end)
-void matrix::printPath()
+void matrix::printPath(tuple<int, int>& cur, tuple<int, int> end)
 {
 	int stepNum = 1;
 	int yStep = get<0>(end) - get<0>(cur); //row
 	int xStep = get<1>(end) - get<1>(cur); //col
-	//cout << "( " << yStep << ',' << xStep << " )" << endl;
+	bool skipY = false, skipX = false;
 	while (true) {
 		cout << "========== Step " << stepNum << " ==========" << endl;
-		//cout << get<0>(cur) << " " << get<1>(cur) << endl;
 		(*this)(get<0>(cur), get<1>(cur)) = 'C';
 		cout << (*this);
 		(*this)(get<0>(cur), get<1>(cur)) = '=';
@@ -79,24 +77,52 @@ void matrix::printPath()
 			break;
 		}
 		stepNum++;
-		if (yStep != 0) {
+		if (!skipY && yStep != 0) {
 			int step = (yStep > 0) ? 1 : -1;
 			if ((*this)(get<0>(cur) + step, get<1>(cur)) != 'O') {
 				get<0>(cur) += step;
 				yStep -= step;
+				skipY = true;
 				continue;
 			}
+			else if (xStep == 0) {
+				//check if within boundaries of matrix
+				if (get<1>(cur) + step < 0 || get<1>(cur) + step > c_size) {
+					step = -step;
+				}
+				if ((*this)(get<0>(cur), get<1>(cur) + step) != 'O') {
+					get<1>(cur) += step;
+					skipX = true;
+					xStep -= step;
+					continue;
+				}
+			}
 		}
-		if (xStep != 0) {
+		if (!skipX && xStep != 0) {
 			int step = (xStep > 0) ? 1 : -1;
 			if ((*this)(get<0>(cur), get<1>(cur) + step) != 'O') {
+				skipY = false;
 				get<1>(cur) += step;
 				xStep -= step;
 				continue;
 			}
+			else if (yStep == 0) {
+				//check if within boundaries of matrix
+				if (get<0>(cur) + step < 0 || get<0>(cur) + step > r_size) {
+					step = -step;
+				}
+				if ((*this)(get<0>(cur) + step, get<1>(cur)) != 'O') {
+					get<0>(cur) += step;
+					yStep -= step;
+					skipY = true;
+					continue;
+				}
+			}
 		}
 	}
-	cout << "Total Steps to goal: "<< stepNum;
+	cout << "Total Steps to goal: "<< stepNum << endl;
+	cout << endl << "************************************************" << "\n\n";
+
 }
 
 

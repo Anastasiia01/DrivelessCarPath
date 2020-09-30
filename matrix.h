@@ -19,10 +19,10 @@ public:
 	void initP();
 	void SetCsize(int c) { c_size = c; } // mutator
 	void SetRsize(int r) { r_size = r; } // mutator
-	void SetCur(int r, int c) { cur = make_tuple(r, c); } // mutator
-	void SetEnd(int r, int c) { end = make_tuple(r, c); } // mutator
-	//void printPath(tuple<int, int>& start, tuple<int, int> end);
-	void printPath();
+	//void SetCur(int r, int c) { cur = make_tuple(r, c); } // mutator
+	//void SetEnd(int r, int c) { end = make_tuple(r, c); } // mutator
+	void printPath(tuple<int, int>& start, tuple<int, int> end);
+	//void printPath();
 	char& operator()(int i, int j) { return p[i][j]; }
 	//matrix operator=(const matrix& m);
 	//friend istream& operator>>(istream& in, matrix& m);
