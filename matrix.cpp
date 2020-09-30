@@ -66,40 +66,43 @@ matrix::~matrix()
 void matrix::printPath()
 {
 	int stepNum = 1;
-	int xStep = get<0>(cur) - get<0>(end);
-	int yStep = get<1>(cur) - get<1>(end);
-	cout << "( " << xStep << ',' << yStep << " )";
-	while (xStep!=0 or yStep!=0) {
-		cout << "========== Step " << stepNum << " ==========" <<endl;
+	int yStep = get<0>(end) - get<0>(cur); //row
+	int xStep = get<1>(end) - get<1>(cur); //col
+	//cout << "( " << yStep << ',' << xStep << " )" << endl;
+	while (true) {
+		cout << "========== Step " << stepNum << " ==========" << endl;
+		//cout << get<0>(cur) << " " << get<1>(cur) << endl;
 		(*this)(get<0>(cur), get<1>(cur)) = 'C';
 		cout << (*this);
 		(*this)(get<0>(cur), get<1>(cur)) = '=';
+		if (yStep == 0 and xStep == 0) {
+			break;
+		}
 		stepNum++;
+		if (yStep != 0) {
+			int step = (yStep > 0) ? 1 : -1;
+			if ((*this)(get<0>(cur) + step, get<1>(cur)) != 'O') {
+				get<0>(cur) += step;
+				yStep -= step;
+				continue;
+			}
+		}
 		if (xStep != 0) {
 			int step = (xStep > 0) ? 1 : -1;
-			if ((get<0>(cur) + step, get<1>(cur)) != 'O') {
-				get<0>(cur) += step;
+			if ((*this)(get<0>(cur), get<1>(cur) + step) != 'O') {
+				get<1>(cur) += step;
 				xStep -= step;
 				continue;
 			}
 		}
-		else if(yStep != 0) {
-			int step = (yStep > 0) ? 1 : -1;
-			if ((get<0>(cur), get<1>(cur) + step) != 'O') {
-				get<1>(cur) += step;
-				yStep -= step;
-			}
-		}
 	}
-	
-
-
+	cout << "Total Steps to goal: "<< stepNum;
 }
 
 
 /*matrix matrix::operator=(const matrix& m)
 {
-	//check if 2d array has the same dim, else resize(destroy & create new) first, then apply '='
+	//check if 2d arrayStep has the same dim, else resize(destroyStep & create new) first, then applyStep '='
 	if (!(m.c_size == c_size && m.r_size == r_size)){
 		for (int i = 0; i < r_size; i++)
 		{
