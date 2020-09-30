@@ -68,6 +68,7 @@ void matrix::printPath(tuple<int, int>& cur, tuple<int, int> end)
 	int yStep = get<0>(end) - get<0>(cur); //row
 	int xStep = get<1>(end) - get<1>(cur); //col
 	bool skipY = false, skipX = false;
+	int x =1, y=1;
 	while (true) {
 		cout << "========== Step " << stepNum << " ==========" << endl;
 		(*this)(get<0>(cur), get<1>(cur)) = 'C';
@@ -78,51 +79,45 @@ void matrix::printPath(tuple<int, int>& cur, tuple<int, int> end)
 		}
 		stepNum++;
 		if (!skipY && yStep != 0) {
-			int step = (yStep > 0) ? 1 : -1;
-			if ((*this)(get<0>(cur) + step, get<1>(cur)) != 'O') {
-				get<0>(cur) += step;
-				yStep -= step;
-				skipY = true;
+			y = (yStep > 0) ? 1 : -1;
+			if ((*this)(get<0>(cur) + y, get<1>(cur)) != 'O') {
+				get<0>(cur) += y;
+				yStep -= y;
+				skipX = false;
 				continue;
 			}
-			else if (xStep == 0) {
-				//check if within boundaries of matrix
-				if (get<1>(cur) + step < 0 || get<1>(cur) + step > c_size) {
-					step = -step;
+			else {
+				if (xStep != 0 && !skipX){
+					x = (xStep > 0) ? 1 : -1;
 				}
-				if ((*this)(get<0>(cur), get<1>(cur) + step) != 'O') {
-					get<1>(cur) += step;
+				if ((*this)(get<0>(cur), get<1>(cur) + x) != 'O') {
+					get<1>(cur) += x;
 					skipX = true;
-					xStep -= step;
+					xStep -= x;
 					continue;
 				}
 			}
 		}
 		if (!skipX && xStep != 0) {
-			int step = (xStep > 0) ? 1 : -1;
-			if ((*this)(get<0>(cur), get<1>(cur) + step) != 'O') {
+			x = (xStep > 0) ? 1 : -1;
+			if ((*this)(get<0>(cur), get<1>(cur) + x) != 'O') {
 				skipY = false;
-				get<1>(cur) += step;
-				xStep -= step;
+				get<1>(cur) += x;
+				xStep -= x;
 				continue;
 			}
-			else if (yStep == 0) {
-				//check if within boundaries of matrix
-				if (get<0>(cur) + step < 0 || get<0>(cur) + step > r_size) {
-					step = -step;
-				}
-				if ((*this)(get<0>(cur) + step, get<1>(cur)) != 'O') {
-					get<0>(cur) += step;
-					yStep -= step;
-					skipY = true;
-					continue;
-				}
+			if (yStep != 0 && !skipY) {
+				y = (yStep > 0) ? 1 : -1;
 			}
+			if ((*this)(get<0>(cur) + y, get<1>(cur)) != 'O') {
+				get<0>(cur) += y;
+				yStep -= y;
+				skipY = true;
+			}			
 		}
 	}
 	cout << "Total Steps to goal: "<< stepNum << endl;
 	cout << endl << "************************************************" << "\n\n";
-
 }
 
 
