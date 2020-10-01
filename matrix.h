@@ -1,3 +1,14 @@
+/*
+* File: matrix.h
+* Author : Anastasiia Babenko
+* Date : 9/30/2020
+* Compiler Used : Visual Studio 2019
+*
+* This is the header file with definition of matrix class that
+* allows to store and reuse multiple times 2d array(matrix) of characters.
+* It also let you print steps of the car moving from the given start to the given end.
+*/
+
 #ifndef MATRIX_H
 #define MATRIX_H
 #include<iostream>
@@ -7,27 +18,22 @@ using namespace std;
 class matrix {
 private:
 	int c_size, r_size;
-	tuple <int, int> cur;
-	tuple <int, int> end;
 	char** p;
 public:
 	matrix();
 	matrix(int c, int r);
 	matrix(const matrix&);
 	~matrix();
-	void resetP();
-	void initP();
-	void SetCsize(int c) { c_size = c; } // mutator
+	void resetP(); //deallocates memory of the previous p
+	void initP(); //initializes empty p
+	void SetCsize(int c) { c_size = c; } // mutator 
 	void SetRsize(int r) { r_size = r; } // mutator
-	//void SetCur(int r, int c) { cur = make_tuple(r, c); } // mutator
-	//void SetEnd(int r, int c) { end = make_tuple(r, c); } // mutator
+	// prints steps of the car moving from start to end
 	void printPath(tuple<int, int>& start, tuple<int, int> end);
-	//void printPath();
 	char& operator()(int i, int j) { return p[i][j]; }
-	//matrix operator=(const matrix& m);
-	//friend istream& operator>>(istream& in, matrix& m);
+	matrix operator=(const matrix& m);
+	matrix operator+=(matrix& m);
 	friend ostream& operator<<(ostream& out, const matrix& m);//output
-	//matrix operator+=(matrix& m);
 };
 
 #endif // !MATRIX_H
